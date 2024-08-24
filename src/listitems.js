@@ -20,6 +20,12 @@ export const mainListItems = (
       </ListItemIcon>
       <ListItemText primary="Users" />
     </ListItemButton>
+    <ListItemButton onClick={()=>{window.location.href='/currency'}}>
+      <ListItemIcon>
+        <Person4Icon/>
+      </ListItemIcon>
+      <ListItemText primary="Currency" />
+    </ListItemButton>
   </React.Fragment>
 );
 
