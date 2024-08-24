@@ -5,6 +5,9 @@ import ListItemText from '@mui/material/ListItemText';
 import ListSubheader from '@mui/material/ListSubheader';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import Person4Icon from '@mui/icons-material/Person4';
+import CurrencyBitcoinIcon from '@mui/icons-material/CurrencyBitcoin';
+import { Navigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 export const mainListItems = (
   <React.Fragment>
@@ -19,6 +22,12 @@ export const mainListItems = (
         <Person4Icon/>
       </ListItemIcon>
       <ListItemText primary="Users" />
+    </ListItemButton>
+    <ListItemButton onClick={()=>{window.location.href='/currency'}}>
+      <ListItemIcon>
+        <CurrencyBitcoinIcon/>
+      </ListItemIcon>
+      <ListItemText primary="Currency" />
     </ListItemButton>
   </React.Fragment>
 );

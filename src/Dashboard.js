@@ -163,7 +163,7 @@ export default function Dashboard() {
           }}
         >
           <Toolbar />
-          <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+          <Container maxWidth="lg" sx={{ mt: 1, mb: 4 }}>
         <BrowserRouter>
           <RoutePage />
         </BrowserRouter>
