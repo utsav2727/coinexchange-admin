@@ -183,6 +183,21 @@ export default function getLPTheme(mode) {
   return {
     ...getDesignTokens(mode),
     components: {
+      MuiAppBar: {
+        styleOverrides: {
+          root: ({ theme }) => ({
+            boxShadow: 'none',
+            backgroundColor: brand[500],
+            color: brand[50],
+            padding: '8px 16px',
+            transition: 'background-color 150ms ease-in-out',
+            ...(theme.palette.mode === 'dark' && {
+              backgroundColor: brand[900],
+              color: brand[200],
+            }),
+          }),
+        },
+      },
       MuiAccordion: {
         defaultProps: {
           elevation: 0,
