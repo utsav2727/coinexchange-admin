@@ -5,6 +5,8 @@ import ListItemText from '@mui/material/ListItemText';
 import ListSubheader from '@mui/material/ListSubheader';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import Person4Icon from '@mui/icons-material/Person4';
+import CurrencyExchangeIcon from '@mui/icons-material/CurrencyExchange';
+import AddCardIcon from '@mui/icons-material/AddCard';
 
 export const mainListItems = (
   <React.Fragment>
@@ -22,35 +24,29 @@ export const mainListItems = (
     </ListItemButton>
     <ListItemButton onClick={()=>{window.location.href='/currency'}}>
       <ListItemIcon>
-        <Person4Icon/>
+        <CurrencyExchangeIcon/>
       </ListItemIcon>
       <ListItemText primary="Currency" />
+    </ListItemButton>
+    <ListItemButton onClick={()=>{window.location.href='/deposit'}}>
+      <ListItemIcon>
+        <AddCardIcon/>
+      </ListItemIcon>
+      <ListItemText primary="Deposits" />
+    </ListItemButton>
+    <ListItemButton onClick={()=>{window.location.href='/withdraw'}}>
+      <ListItemIcon>
+        <AddCardIcon/>
+      </ListItemIcon>
+      <ListItemText primary="Withdraw" />
     </ListItemButton>
   </React.Fragment>
 );
 
 export const secondaryListItems = (
   <React.Fragment>
-    <ListSubheader component="div" inset>
+    {/* <ListSubheader component="div" inset>
       Saved reports
-    </ListSubheader>
-    {/* <ListItemButton>
-      <ListItemIcon>
-        <AssignmentIcon />
-      </ListItemIcon>
-      <ListItemText primary="Current month" />
-    </ListItemButton>
-    <ListItemButton>
-      <ListItemIcon>
-        <AssignmentIcon />
-      </ListItemIcon>
-      <ListItemText primary="Last quarter" />
-    </ListItemButton>
-    <ListItemButton>
-      <ListItemIcon>
-        <AssignmentIcon />
-      </ListItemIcon>
-      <ListItemText primary="Year-end sale" />
-    </ListItemButton> */}
+    </ListSubheader> */}
   </React.Fragment>
 );
