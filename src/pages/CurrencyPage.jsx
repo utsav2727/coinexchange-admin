@@ -1,100 +1,162 @@
-import * as React from 'react';
-import { DataGrid } from '@mui/x-data-grid';
-import { useState } from 'react';
+import React from 'react'
+import CustomTable from '../components/CustomTable'
 import { useEffect } from 'react';
-import axiosInstance from '../services/axiosInstance';
-import SearchAppBar from '../components/Searchbar';
-import EditIcon from '@mui/icons-material/Edit';
-import DeleteIcon from '@mui/icons-material/Delete';
-import IconButton from '@mui/material/IconButton';
-import Button from '@mui/material/Button';
-import Stack from '@mui/material/Stack';
-//import { Dialog, DialogActions, DialogContent, DialogTitle, Button, TextField } from '@mui/material';
+import { addCurrencies, deleteCurrencies, getCurrencies, updateCurrencies } from '../services/currencyServices';
+import { useState } from 'react';
+import { Box, Button, DialogContent, Grid, Stack, TextField, Typography } from '@mui/material';
+import { styled } from '@mui/material/styles';
+import Dialog from '@mui/material/Dialog';
+import CustomModal from '../components/Modal/CustomModal';
+
+const BootstrapDialog = styled(Dialog)(({ theme }) => ({
+  '& .MuiDialogContent-root': {
+    padding: theme.spacing(2),
+  },
+  '& .MuiDialogActions-root': {
+    padding: theme.spacing(1),
+  },
+}));
 
 
+const CurrencyPage = () => {
 
-
-export default function CurrencyPage() {
-    
-    const [currRate, setCurrRate] = useState([]);
+    const [open, setOpen] = React.useState(false);
     const [reload, setReload] = useState(false);
-    
-    const handleDelete = async (id) => {
-        try {
-            const data = await axiosInstance.delete(`/deleteCurr/${id}`);
-            console.log('data', data);
-            setReload(!reload);
-        } catch (error) {
-            console.error('Error deleting currency:', error);
-        }
+    const [mode, setMode] = useState('create');
+    const [selectedRow,setSelectedRow] = useState({});
+
+    const handleClickOpen = () => {
+        setOpen(true);
     };
-    
+    const handleClose = () => {
+        setOpen(false);
+    };
+
     const columns = [
-        { field: '_id', headerName: 'ID', width: 200 },
-        { field: 'name', headerName: 'Name', width: 200 },
-      { field: 'code', headerName: 'Code', width: 100 },
-      { field: 'rate', headerName: 'Rate', width: 130 },
+      { field: '_id', headerName: 'ID' },
+      { field: 'name', headerName: 'Name' },
+      { field: 'symbol', headerName: 'Symbol' },
+      { field: 'tag', headerName: 'Tag' },
+      { field: 'conversionRate', headerName: 'conversion rate' },
+      { field: 'createdAt', headerName: 'Created At' },
+      { field: 'updatedAt', headerName: 'Updated At' },
       {
         field: 'actions',
         headerName: 'Actions',
-        width: 200,
+        width: 150,
         renderCell: (params) => (
-          <>
-            {console.log(params)}
-            
-            <Button variant="contained"  >
-                Edit
+          <div>
+            <Button
+              variant="contained"
+              color="primary"
+              size="small"
+              style={{ marginRight: 5 }}
+              onClick={() => handleEdit(params.row)}
+            >
+              Edit
             </Button>
-        
-            <Button variant="contained" color="error" onClick={() => handleDelete(params.row._id)} style={{marginLeft:"5px"}} >
-                Delete
+            <Button
+              variant="contained"
+              color="secondary"
+              size="small"
+              onClick={() => handleDelete(params.row)}
+            >
+              Delete
             </Button>
-            
-          </>
+          </div>
         ),
       },
     ];
-    
-    
+
+    const handleEdit= async (row)=>{
+
+        console.log('row', row);
+       
+        setReload((prev)=>!prev);
+        setMode('edit');
+        setOpen(true);
+        setSelectedRow(row)
+    };
+
+    const handleUpdate = async (event, id)=>{
+        event.preventDefault();
+        const data = new FormData(event.currentTarget);
+
+        const ids = addColumns.map((item)=>item.field);
+        
+        let body = {};
+        
+        for(let item of ids){
+            body[item] = data.get(item);
+        }
+        console.log('body', body);
+        await updateCurrencies(id, body);
+        setTimeout(()=>{
+            handleClose();
+        }, 1000)
+
+        setReload((prev)=>!prev);
+    }
+
+    const handleDelete = async (row)=>{
+
+        await deleteCurrencies(row._id);
+        setReload((prev)=>!prev);
+    }
+
+    const addColumns = [
+        { field: 'name', headerName: 'Name' },
+      { field: 'symbol', headerName: 'Symbol' },
+      { field: 'tag', headerName: 'Tag' },
+      { field: 'conversionRate', headerName: 'conversion rate' },
+    ]
+
+    const [rows, setRows] = useState([]);
 
 
     useEffect(()=>{
         async function fetchData(){
-            const data = await axiosInstance.get('/currencies')
-            console.log('data', data);
-            setCurrRate(data.data)
+            let response = await getCurrencies();
+            setRows(response);
         }
         fetchData();
-    },[reload])
+    },[reload]);
 
-    console.log('userData', currRate)
+    const handleSubmit = async (event)=>{
+        event.preventDefault();
+        const data = new FormData(event.currentTarget);
 
-    const handleEdit = (row) => {
-        // Implement your edit logic here
-        // For example, you could open a dialog with a form to edit the row
-        console.log('Editing row:', row);
-    };
+        const ids = addColumns.map((item)=>item.field);
+        
+        let body = {};
+        
+        for(let item of ids){
+            body[item] = data.get(item);
+        }
+        console.log('body', body);
+        await addCurrencies(body);
+        setTimeout(()=>{
+            handleClose();
+        }, 1000)
 
+        setReload((prev)=>!prev);
+
+    }
     
 
-
   return (
-      <div>
-          <SearchAppBar setReload={setReload}/>
-          <div style={{ height: 600, width: '100%' }}>
-              <DataGrid
-                  getRowId={(item) => item._id}
-                  rows={currRate}
-                  columns={columns}
-                  initialState={{
-                      pagination: {
-                          paginationModel: { page: 0, pageSize: 10 },
-                      },
-                  }}
-                  pageSizeOptions={[5, 10]}
-                  checkboxSelection
-              />
-          </div>
-      </div>
-  );
+    <div>
+        <h3>Manage Currency</h3>
+        <Box justifyItems={'end'} textAlign={'end'} sx={{my:2}}>
+            <Button variant='outlined' onClick={handleClickOpen}>Add</Button>
+        </Box>
+        <CustomModal selectedRow={selectedRow} open={open} mode={mode} addColumns={addColumns} handleClose={handleClose}
+        handleSubmit={handleSubmit}
+        handleEdit= {handleUpdate}
+        />
+        <CustomTable rows={rows} columns={columns}/>
+    </div>
+  )
 }
+
+export default CurrencyPage

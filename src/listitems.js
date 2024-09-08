@@ -25,7 +25,7 @@ export const mainListItems = (
     </ListItemButton>
     <ListItemButton onClick={()=>{window.location.href='/currency'}}>
       <ListItemIcon>
-        <CurrencyBitcoinIcon/>
+        <Person4Icon/>
       </ListItemIcon>
       <ListItemText primary="Currency" />
     </ListItemButton>

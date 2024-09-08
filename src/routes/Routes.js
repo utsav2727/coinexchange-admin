@@ -4,7 +4,6 @@ import {
     Routes,
 } from "react-router-dom";
 import React from 'react';
-import Dashboard from "../Dashboard";
 import DashboardPage from "../pages/DashboardPage";
 import UserPage from "../pages/UserPage";
 import CurrencyPage from "../pages/CurrencyPage";
