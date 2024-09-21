@@ -2,35 +2,34 @@ import React from 'react'
 import { CrudPage } from '../components/CrudPage.jsx/CrudPage'
 import { getCurrencies } from '../services/currencyServices';
 import { approveWithdraw, getWithdraw, rejectWithdraw } from '../services/withdrawService';
+import { approvKyc, getKycDetails, rejectKyc } from '../services/kycService';
 
-const WithdrawPage = () => {
+const KycPage = () => {
 
     const columns = [
         { field: '_id', headerName: 'ID' },
-        { field: 'username', headerName: 'UserName' },
-        { field: 'useremail', headerName: 'UserEmail' },
-        { field: 'transactionRef', headerName: 'Transaction Ref' },
-        { field: 'currencyId', headerName: 'Currency' },
+        { field: 'userId', headerName: 'UserName' },
+        { field: 'documentType', headerName: 'Document Type' },
+        { field: 'documentNumber', headerName: 'Document Number' },
+        { field: 'documentFile', headerName: 'Document File' },
         { field: 'status', headerName: 'Status' },
-        { field: 'amount', headerName: 'Amount' },
-        { field: 'transactionMode', headerName: 'Transaction Mode' },
         { field: 'createdAt', headerName: 'Submitted On' }
       ];
 
   return (
     <CrudPage
-    name={"Withdraw"}
+    name={"KYC"}
     columns={columns}
     isAdd={false}
     isUpdate={false}
     isDelete={false}
-    fetchDatafn={getWithdraw}
+    fetchDatafn={getKycDetails}
     isApprove={true}
     isReject={true}
-    // approveAPIfn={approveWithdraw}
-    // rejectAPIfn={rejectWithdraw}
+    approveAPIfn={approvKyc}
+    rejectAPIfn={rejectKyc}
     />
   )
 }
 
-export default WithdrawPage
+export default KycPage

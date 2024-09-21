@@ -13,6 +13,8 @@ import TradePage, { TradeBuyingPage } from "../pages/TradePage";
 import TradeSellingPage from "../pages/TradePage";
 import ChatWindow from "../pages/TradeDetailsPage";
 import TradeConversions from "../pages/MoreInfoPage";
+import KycPage from "../pages/KycPage";
+import SupportPage from "../pages/SupportPage";
 
 const RoutePage = () => {
     return (
@@ -26,6 +28,8 @@ const RoutePage = () => {
             <Route path="/trade/buying" element={<TradeBuyingPage/>} />
             {/* <Route path="/trade/moreInfo/tradeDetails" element={<ChatWindow/>} /> */}
             <Route path="/trade/moreInfo" element={<TradeConversions/>} />
+            <Route path="/kyc" element={<KycPage/>} />
+            <Route path="/support" element={<SupportPage/>} />
         </Routes>
     );
 }
