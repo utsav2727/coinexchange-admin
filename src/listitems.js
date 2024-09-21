@@ -5,9 +5,13 @@ import ListItemText from '@mui/material/ListItemText';
 import ListSubheader from '@mui/material/ListSubheader';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import Person4Icon from '@mui/icons-material/Person4';
-import CurrencyBitcoinIcon from '@mui/icons-material/CurrencyBitcoin';
-import { Navigate } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
+import CurrencyExchangeIcon from '@mui/icons-material/CurrencyExchange';
+import AddCardIcon from '@mui/icons-material/AddCard';
+import Accordion from '@mui/material/Accordion';
+import AccordionDetails from '@mui/material/AccordionDetails';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import AccordionSummary from '@mui/material/AccordionSummary';
+import ReceiptLongTwoToneIcon from '@mui/icons-material/ReceiptLongTwoTone';
 
 export const mainListItems = (
   <React.Fragment>
@@ -25,35 +29,64 @@ export const mainListItems = (
     </ListItemButton>
     <ListItemButton onClick={()=>{window.location.href='/currency'}}>
       <ListItemIcon>
-        <Person4Icon/>
+        <CurrencyExchangeIcon/>
       </ListItemIcon>
       <ListItemText primary="Currency" />
     </ListItemButton>
+    <ListItemButton onClick={()=>{window.location.href='/deposit'}}>
+      <ListItemIcon>
+        <AddCardIcon/>
+      </ListItemIcon>
+      <ListItemText primary="Deposits" />
+    </ListItemButton>
+    <ListItemButton onClick={()=>{window.location.href='/withdraw'}}>
+      <ListItemIcon>
+        <AddCardIcon/>
+      </ListItemIcon>
+      <ListItemText primary="Withdraw" />
+    </ListItemButton>
+    
+      {/* <ListItemIcon>
+        <AddCardIcon/>
+      </ListItemIcon>
+      <ListItemText primary="Trade Details" /> */}
+      
+    <Accordion>
+      
+     
+      <AccordionSummary
+        DashboardIcon = {<ReceiptLongTwoToneIcon/>}
+        expandIcon={<ExpandMoreIcon />}
+        aria-controls="panel1-content"
+        id="panel1-header"
+        style={{backgroundcolor:(0, 0, 0, 0.04)}}
+      >
+        Trade Details
+      </AccordionSummary>
+     
+      <AccordionDetails>
+        <ListItemButton onClick={()=>{window.location.href='/trade/selling'}}>
+          <ListItemIcon>
+            Selling Trade
+          </ListItemIcon>
+        </ListItemButton>
+        <ListItemButton onClick={()=>{window.location.href='/trade/buying'}}>
+          <ListItemIcon>
+            Buying Trade
+          </ListItemIcon>
+        </ListItemButton>
+      </AccordionDetails>
+    </Accordion>
+
+
+    
   </React.Fragment>
 );
 
 export const secondaryListItems = (
   <React.Fragment>
-    <ListSubheader component="div" inset>
+    {/* <ListSubheader component="div" inset>
       Saved reports
-    </ListSubheader>
-    {/* <ListItemButton>
-      <ListItemIcon>
-        <AssignmentIcon />
-      </ListItemIcon>
-      <ListItemText primary="Current month" />
-    </ListItemButton>
-    <ListItemButton>
-      <ListItemIcon>
-        <AssignmentIcon />
-      </ListItemIcon>
-      <ListItemText primary="Last quarter" />
-    </ListItemButton>
-    <ListItemButton>
-      <ListItemIcon>
-        <AssignmentIcon />
-      </ListItemIcon>
-      <ListItemText primary="Year-end sale" />
-    </ListItemButton> */}
+    </ListSubheader> */}
   </React.Fragment>
 );
